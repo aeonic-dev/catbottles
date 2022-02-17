@@ -1,0 +1,14 @@
+{
+  "item.cat_bottle.fill": {
+    "sounds": [
+      "catbottles:cat_bottle/fill1",
+      "catbottles:cat_bottle/fill2",
+      "catbottles:cat_bottle/fill3",
+      "catbottles:cat_bottle/fill4",
+      "catbottles:cat_bottle/fill5",
+      "catbottles:cat_bottle/fill6",
+      "catbottles:cat_bottle/fill7",
+      "catbottles:cat_bottle/fill8"
+    ]
+  }
+}

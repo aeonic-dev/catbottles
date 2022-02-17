@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "design.aeonic.catbottles.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.catbottles.refmap.json",
+  "mixins": [
+    "CatMixin"
+  ],
+  "client": [],
+  "minVersion": "0.8.4"
+}
