@@ -2,16 +2,23 @@ package design.aeonic.catbottles.base.cats;
 
 import design.aeonic.catbottles.CatBottles;
 import design.aeonic.catbottles.content.bottles.CatBottleItem;
+import design.aeonic.catbottles.content.bottles.ThrowableCatBottleItem;
+import design.aeonic.catbottles.registry.ModItems;
 import design.aeonic.catbottles.registry.ModLang;
+import design.aeonic.catbottles.registry.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -24,6 +31,9 @@ import java.util.function.Consumer;
 
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public interface ICatContainer<T> {
+
+    interface CatItem extends ItemLike, ItemStackCatContainer {}
+    interface ItemStackCatContainer extends ICatContainer<ItemStack> {}
 
     // Tags transferred from Cat entity
     String                  ENTITY_ROOT = "EntityData";
@@ -87,11 +97,21 @@ public interface ICatContainer<T> {
             return obj;
         }
 
+        public static <T> T from(CatWrapper<T> old, T instance) {
+            return transfer(old, instance).get();
+        }
+
+        public static <T> CatWrapper<T> transfer(CatWrapper<T> old, T instance) {
+            var cat = old.outer.catInstance(instance);
+            cat.merge(old);
+            return cat;
+        }
+
         public T get() {
             return instance;
         }
 
-        public void merge(CatWrapper<T> other) {
+        public void merge(CatWrapper<?> other) {
             itemTag.merge(other.getItemTag());
             entityTag.merge(other.getEntityTag());
         }
@@ -205,7 +225,7 @@ public interface ICatContainer<T> {
         double y = pos.getY();
         double z = pos.getZ();
 
-        cat.moveTo(x, y + 1, z);
+        cat.moveTo(x, y, z);
         cat.readAdditionalSaveData(instance.getEntityTag());
         if (instance.hasCustomName())
             cat.setCustomName(new TextComponent(instance.getCustomName()));
@@ -239,6 +259,7 @@ public interface ICatContainer<T> {
         JELLIE(9),
         ALL_BLACK(10);
 
+        // like #ordinal() but futureproof!
         public final float value;
 
         CatType(float value) {
@@ -261,6 +282,10 @@ public interface ICatContainer<T> {
             return new ResourceLocation(CatBottles.MOD_ID, "item/cat_bottle_" + this);
         }
 
+        public ResourceLocation getTexture(String namePrefix) {
+            return new ResourceLocation(CatBottles.MOD_ID, "item/" + namePrefix + "_cat_bottle_" + this);
+        }
+
         public String getLangKey() {
             return CatBottles.MOD_ID + ".cat_bottle.type." + this;
         }
@@ -269,6 +294,14 @@ public interface ICatContainer<T> {
         @Override
         public String getSerializedName() {
             return toString();
+        }
+
+        public Tag.Named<Item> tag() {
+            return ModTags.getCatTypeTag(this);
+        }
+
+        public CatBottleItem baseItem() {
+            return ModItems.CAT_BOTTLES.get(this).get();
         }
     }
 }
