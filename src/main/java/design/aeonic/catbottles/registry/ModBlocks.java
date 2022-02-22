@@ -30,15 +30,18 @@ public class ModBlocks {
 									.strength(0.3F)
 									.sound(CatBottleBlock.SOUND_TYPE).noDrops()
 									.noOcclusion().isViewBlocking((x, y, z) -> false)
-									.lightLevel(s -> s.getValue(CatBottleBlock.IS_GLOWY) ? 8 : 0))
+									.lightLevel(s -> s.getValue(CatBottleBlock.IS_GLOWY) ? 8 : 0)
+									.randomTicks())
 							.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 							.addLayer(() -> RenderType::cutout)
 							.loot((prv, self) -> {})//prv.add(self, new LootTable.Builder())) // mIsSiNg LoOt TaBlE eNtRy FoR bLoCk
 							.lang("Bottle of Cat")
 							.blockstate((ctx, prv) -> prv.getVariantBuilder(ctx.get()).forAllStatesExcept(s -> {
-								String spec =
-										(s.getValue(CatBottleBlock.IS_BIG) ? "big" : "small") +
-										(s.getValue(CatBottleBlock.IS_ON_CHAIN) ? "_chain" : "");
+								var isBig = s.getValue(CatBottleBlock.IS_BIG);
+								var shape = s.getValue(CatBottleBlock.BOTTLE_SHAPE);
+
+								String spec = (isBig ? "big" : "small") + (shape == CatBottleBlock.BottleShape.CHAIN
+												? "_chain" : (shape == CatBottleBlock.BottleShape.TIPPED ? "_tipped" : ""));
 
 								return ConfiguredModel.builder().modelFile(prv.models().withExistingParent(
 										ctx.getName() + "_" + spec, CatBottles.MOD_ID +
