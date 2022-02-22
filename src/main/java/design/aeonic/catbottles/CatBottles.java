@@ -1,17 +1,17 @@
 package design.aeonic.catbottles;
 
+import design.aeonic.catbottles.recipe.brewing.CatBrewingRecipe;
 import design.aeonic.catbottles.base.misc.ConfigHelper;
 import design.aeonic.catbottles.config.ConfigCommon;
 import design.aeonic.catbottles.config.ConfigServer;
-import design.aeonic.catbottles.recipe.brewing.DyeCatRecipes;
 import design.aeonic.catbottles.registry.*;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Style;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import org.apache.logging.log4j.LogManager;
 
 @Mod(CatBottles.MOD_ID)
 @Mod.EventBusSubscriber(modid = CatBottles.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -36,16 +36,16 @@ public class CatBottles {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            BrewingRecipeRegistry.addRecipe(DyeCatRecipes.INSTANCE);
             ModRecipeTypes.register();
         });
     }
 
-    public static final class Styles {
-        public static final Style IMPORTANT = Style.EMPTY.withColor(ChatFormatting.LIGHT_PURPLE);
-        public static final Style INFO  = Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true);
-        public static final Style BORING = Style.EMPTY.withColor(ChatFormatting.GRAY);
-        public static final Style STAT  = Style.EMPTY.withColor(ChatFormatting.AQUA);
+    @SubscribeEvent
+    public static void loadComplete(FMLLoadCompleteEvent event) {
+        CatBrewingRecipe.wakeUp();
+        event.enqueueWork(() -> {
+            BrewingRecipeRegistry.addRecipe(CatBrewingRecipe.DYEING);
+            BrewingRecipeRegistry.addRecipe(CatBrewingRecipe.AUGMENTING);
+        });
     }
-
 }
