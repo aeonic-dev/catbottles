@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * "Virtual" recipe, actual logic is handled elsewhere
+ */
 public record CatBathingRecipe(ResourceLocation id) implements Recipe<Container> {
 
     public static final CatBathingRecipe THE_ONLY_ONE =
