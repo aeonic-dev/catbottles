@@ -19,6 +19,10 @@ public class ModLang {
     // GUIS
     public static final TranslatableComponent CAT_BATHING = addLang("gui.cat_bathing.name", "Cat Bathing");
     public static final TranslatableComponent CAT_DYEING = addLang("gui.cat_dyeing.name", "Cat Dyeing");
+    public static final TranslatableComponent CAT_AUGMENTING = addLang("gui.cat_augmenting.name", "Cat Distilling");
+
+    public static final TranslatableComponent ANY_CAT_BOTTLE_NAME = addLang("gui.any_cat_bottle.name", "Any Cat Bottle");
+    public static final TranslatableComponent ANY_CAT_BOTTLE_TOOLTIP = addLang("gui.any_cat_bottle.tooltip", "Keeps all data");
 
     public static final TranslatableComponent YES = new TranslatableComponent("gui.yes");
     public static final TranslatableComponent NO = new TranslatableComponent("gui.no");
@@ -31,6 +35,8 @@ public class ModLang {
     public static final TranslatableComponent CAT_BOTTLE_STAT_AGE = addLang("cat_bottle.stat.age", "Age");
     public static final TranslatableComponent CAT_BOTTLE_AGE_CHILD = addLang("cat_bottle.stat.age.child", "Child");
     public static final TranslatableComponent CAT_BOTTLE_AGE_ADULT = addLang("cat_bottle.stat.age.adult", "Adult");
+
+    public static final TranslatableComponent CAT_BOTTLE_THROW_TOOLTIP = addLang("throwable_cat_bottle.throw_tooltip", "Throw to release the cat inside!");
 
     public static final List<TranslatableComponent> CAT_BOTTLE_MESSAGES;
 

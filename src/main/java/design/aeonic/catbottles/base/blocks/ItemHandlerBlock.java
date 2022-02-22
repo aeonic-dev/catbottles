@@ -1,9 +1,9 @@
-package design.aeonic.catbottles.base.block;
+package design.aeonic.catbottles.base.blocks;
 
-import design.aeonic.catbottles.base.block.entity.ItemHandlerBlockEntity;
-import design.aeonic.catbottles.base.block.entity.MenuBlockEntity;
-import design.aeonic.catbottles.base.block.menu.ItemHandlerMenu;
-import design.aeonic.catbottles.base.block.menu.SimpleMenu;
+import design.aeonic.catbottles.base.blocks.entity.ItemHandlerBlockEntity;
+import design.aeonic.catbottles.base.blocks.entity.MenuBlockEntity;
+import design.aeonic.catbottles.base.blocks.menu.ItemHandlerMenu;
+import design.aeonic.catbottles.base.blocks.menu.SimpleMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;

@@ -1,6 +1,6 @@
-package design.aeonic.catbottles.base.block.entity;
+package design.aeonic.catbottles.base.blocks.entity;
 
-import design.aeonic.catbottles.base.block.SimpleEntityBlock;
+import design.aeonic.catbottles.base.blocks.SimpleEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

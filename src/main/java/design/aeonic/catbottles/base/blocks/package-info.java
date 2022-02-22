@@ -1,6 +1,6 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package design.aeonic.catbottles.base.block.entity;
+package design.aeonic.catbottles.base.blocks;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

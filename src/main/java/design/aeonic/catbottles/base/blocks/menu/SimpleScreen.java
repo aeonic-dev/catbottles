@@ -1,8 +1,8 @@
-package design.aeonic.catbottles.base.block.menu;
+package design.aeonic.catbottles.base.blocks.menu;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import design.aeonic.catbottles.base.block.entity.MenuBlockEntity;
+import design.aeonic.catbottles.base.blocks.entity.MenuBlockEntity;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
