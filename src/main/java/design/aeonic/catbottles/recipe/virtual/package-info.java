@@ -1,6 +1,6 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package design.aeonic.catbottles.base.block.menu;
+package design.aeonic.catbottles.recipe.virtual;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

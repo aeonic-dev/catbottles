@@ -1,7 +1,7 @@
-package design.aeonic.catbottles.base.block.entity;
+package design.aeonic.catbottles.base.blocks.entity;
 
-import design.aeonic.catbottles.base.block.menu.ItemHandlerMenu;
-import design.aeonic.catbottles.base.block.menu.SimpleMenu;
+import design.aeonic.catbottles.base.blocks.menu.ItemHandlerMenu;
+import design.aeonic.catbottles.base.blocks.menu.SimpleMenu;
 import design.aeonic.catbottles.base.misc.MultiMap;
 import design.aeonic.catbottles.base.misc.QuadFunction;
 import net.minecraft.core.BlockPos;

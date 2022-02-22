@@ -1,6 +1,6 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package design.aeonic.catbottles.base.block;
+package design.aeonic.catbottles.recipe.brewing;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

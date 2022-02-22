@@ -1,6 +1,6 @@
 package design.aeonic.catbottles.content.bottles;
 
-import design.aeonic.catbottles.base.block.entity.SimpleBlockEntity;
+import design.aeonic.catbottles.base.blocks.entity.SimpleBlockEntity;
 import design.aeonic.catbottles.base.cats.ICatContainer;
 import design.aeonic.catbottles.registry.ModItems;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -15,7 +15,8 @@ public class CatBottleBlockEntity extends SimpleBlockEntity {
 
     private CompoundTag itemData;
     private CompoundTag entityData;
-    private boolean destroyedByPlayerFall = false;
+    private boolean shouldReleaseEntity = false;
+    private boolean shouldDropItem = true;
 
     public CatBottleBlockEntity(BlockEntityType<? extends SimpleBlockEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -54,12 +55,20 @@ public class CatBottleBlockEntity extends SimpleBlockEntity {
                     getBlockState(), serverLevel, getBlockPos(), this);
     }
 
-    public void setShouldReleaseEntity() {
-        destroyedByPlayerFall = true;
+    public void setShouldReleaseEntity(boolean shouldReleaseEntity) {
+        this.shouldReleaseEntity = shouldReleaseEntity;
     }
 
     public boolean shouldReleaseEntity() {
-        return destroyedByPlayerFall;
+        return shouldReleaseEntity;
+    }
+
+    public void setShouldDropItem(boolean shouldDropItem) {
+        this.shouldDropItem = shouldDropItem;
+    }
+
+    public boolean shouldDropItem() {
+        return shouldDropItem;
     }
 
     @Override
@@ -68,7 +77,7 @@ public class CatBottleBlockEntity extends SimpleBlockEntity {
 
         itemData = pTag.getCompound(ICatContainer.TAG_ITEM).copy();
         entityData = pTag.getCompound(ICatContainer.TAG_ENTITY).copy();
-        destroyedByPlayerFall = pTag.getBoolean("DestroyedByPlayerFall");
+        shouldReleaseEntity = pTag.getBoolean("DestroyedByPlayerFall");
         updateBlockState();
     }
 
@@ -79,6 +88,6 @@ public class CatBottleBlockEntity extends SimpleBlockEntity {
 
         pTag.put(ICatContainer.TAG_ITEM, itemData.copy());
         pTag.put(ICatContainer.TAG_ENTITY, entityData.copy());
-        pTag.putBoolean("DestroyedByPlayerFall", destroyedByPlayerFall);
+        pTag.putBoolean("DestroyedByPlayerFall", shouldReleaseEntity);
     }
 }

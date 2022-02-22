@@ -1,4 +1,4 @@
-package design.aeonic.catbottles.base.mixin;
+package design.aeonic.catbottles.base.mixins;
 
 import design.aeonic.catbottles.content.bottles.CatBottleItem;
 import design.aeonic.catbottles.registry.ModSoundEvents;

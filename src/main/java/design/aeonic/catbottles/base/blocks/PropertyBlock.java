@@ -1,4 +1,4 @@
-package design.aeonic.catbottles.base.block;
+package design.aeonic.catbottles.base.blocks;
 
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;

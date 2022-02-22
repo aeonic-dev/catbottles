@@ -1,6 +1,6 @@
 package design.aeonic.catbottles.mixin;
 
-import design.aeonic.catbottles.base.mixin.MixinCallbacks;
+import design.aeonic.catbottles.base.mixins.MixinCallbacks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

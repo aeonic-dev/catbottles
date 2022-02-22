@@ -1,7 +1,7 @@
-package design.aeonic.catbottles.base.block;
+package design.aeonic.catbottles.base.blocks;
 
 import com.tterrag.registrate.builders.BlockEntityBuilder;
-import design.aeonic.catbottles.base.block.entity.SimpleBlockEntity;
+import design.aeonic.catbottles.base.blocks.entity.SimpleBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;

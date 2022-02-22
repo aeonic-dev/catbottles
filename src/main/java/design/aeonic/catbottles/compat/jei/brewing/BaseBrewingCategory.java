@@ -1,7 +1,7 @@
 package design.aeonic.catbottles.compat.jei.brewing;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import design.aeonic.catbottles.recipe.brewing.ModBrewingRecipe;
+import design.aeonic.catbottles.recipe.brewing.CatBrewingRecipe;
 import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -17,14 +17,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
 /**
  * Lots of copy pasting from the JEI vanilla plugin
  */
-public abstract class BaseBrewingCategory implements IRecipeCategory<ModBrewingRecipe> {
+public abstract class BaseBrewingCategory implements IRecipeCategory<CatBrewingRecipe.DisplayBrewingRecipe> {
 
     public static final ResourceLocation BREWING_GUI = new ResourceLocation(ModIds.JEI_ID, "textures/gui/gui_vanilla.png");
 
@@ -63,8 +62,8 @@ public abstract class BaseBrewingCategory implements IRecipeCategory<ModBrewingR
     }
 
     @Override
-    public Class<ModBrewingRecipe> getRecipeClass() {
-        return ModBrewingRecipe.class;
+    public Class<CatBrewingRecipe.DisplayBrewingRecipe> getRecipeClass() {
+        return CatBrewingRecipe.DisplayBrewingRecipe.class;
     }
 
     @Override
@@ -83,7 +82,7 @@ public abstract class BaseBrewingCategory implements IRecipeCategory<ModBrewingR
     }
 
     @Override
-    public void setIngredients(ModBrewingRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(CatBrewingRecipe.DisplayBrewingRecipe recipe, IIngredients ingredients) {
         ingredients.setInputLists(VanillaTypes.ITEM, List.of(
                 recipe.inputs(),
                 recipe.inputs(),
@@ -94,19 +93,18 @@ public abstract class BaseBrewingCategory implements IRecipeCategory<ModBrewingR
     }
 
     @Override
-    public void draw(ModBrewingRecipe recipe, PoseStack poseStack, double mouseX, double mouseY) {
+    public void draw(CatBrewingRecipe.DisplayBrewingRecipe recipe, PoseStack poseStack, double mouseX, double mouseY) {
         blazeHeat.draw(poseStack, 5, 30);
         bubbles.draw(poseStack, 8, 0);
         arrow.draw(poseStack, 42, 2);
 
-        String brewingStepsString = Integer.toString(recipe.getBrewingSteps());
-        TranslatableComponent steps = new TranslatableComponent("gui.jei.category.brewing.steps", brewingStepsString);
+        TranslatableComponent steps = new TranslatableComponent("gui.jei.category.brewing.steps", 1);
         Minecraft minecraft = Minecraft.getInstance();
         minecraft.font.draw(poseStack, steps, 70, 28, 0xFF808080);
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, ModBrewingRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, CatBrewingRecipe.DisplayBrewingRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
 
         itemStacks.init(brewPotionSlot1, true, 0, 36);

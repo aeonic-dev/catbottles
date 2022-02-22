@@ -1,6 +1,6 @@
-package design.aeonic.catbottles.base.block.menu;
+package design.aeonic.catbottles.base.blocks.menu;
 
-import design.aeonic.catbottles.base.block.entity.MenuBlockEntity;
+import design.aeonic.catbottles.base.blocks.entity.MenuBlockEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;

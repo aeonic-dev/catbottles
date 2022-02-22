@@ -1,8 +1,9 @@
 package design.aeonic.catbottles.content.bottles;
 
-import design.aeonic.catbottles.CatBottles;
 import design.aeonic.catbottles.base.cats.ICatContainer;
 import design.aeonic.catbottles.base.misc.Blocknt;
+import design.aeonic.catbottles.base.misc.Styles;
+import design.aeonic.catbottles.content.AssholeItemEntity;
 import design.aeonic.catbottles.registry.ModBlocks;
 import design.aeonic.catbottles.registry.ModItems;
 import design.aeonic.catbottles.registry.ModLang;
@@ -16,6 +17,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Cat;
@@ -35,7 +37,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
-public class CatBottleItem extends Blocknt implements ICatContainer<ItemStack> {
+public class CatBottleItem extends Blocknt implements ICatContainer.CatItem {
 
     private final CatType type;
     private final MutableComponent typeComponent;
@@ -43,7 +45,31 @@ public class CatBottleItem extends Blocknt implements ICatContainer<ItemStack> {
     public CatBottleItem(Properties props, CatType type) {
         super(ModBlocks.CAT_BOTTLES.get(type).get(), props);
         this.type = type;
-        typeComponent = new TranslatableComponent(type.getLangKey()).setStyle(CatBottles.Styles.IMPORTANT);
+        typeComponent = new TranslatableComponent(type.getLangKey()).setStyle(Styles.IMPORTANT);
+    }
+
+    @Override
+    public boolean hasCustomEntity(ItemStack stack) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public Entity createEntity(Level level, Entity location, ItemStack itemstack) {
+        var random = new Random();
+        var entity = AssholeItemEntity.create(level, location.getX(), location.getY(), location.getZ(), itemstack);
+        float f7 = 0.3F;
+        float f8 = Mth.sin(location.getXRot() * ((float)Math.PI / 180F));
+        float f2 = Mth.cos(location.getXRot() * ((float)Math.PI / 180F));
+        float f3 = Mth.sin(location.getYRot() * ((float)Math.PI / 180F));
+        float f4 = Mth.cos(location.getYRot() * ((float)Math.PI / 180F));
+        float f5 = random.nextFloat() * ((float)Math.PI * 2F);
+        float f6 = 0.02F * random.nextFloat();
+        entity.setDeltaMovement(
+                (double)(-f3 * f2 * 0.3F) + Math.cos((double)f5) * (double)f6,
+                (double)(-f8 * 0.3F + 0.1F + (random.nextFloat() - random.nextFloat()) * 0.1F),
+                (double)(f4 * f2 * 0.3F) + Math.sin((double)f5) * (double)f6);
+        return entity;
     }
 
     public CatType getType() {
@@ -55,19 +81,6 @@ public class CatBottleItem extends Blocknt implements ICatContainer<ItemStack> {
         if (stack.getItem() instanceof CatBottleItem item) return item.getType();
         return CatType.getDefault();
     }
-
-//    @Override
-//    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-//        if (!pLevel.isClientSide) {
-//            var entity = new ThrownCatBottle(pPlayer, pLevel);
-//            entity.setItem(pPlayer.getItemInHand(pUsedHand));
-//            entity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), -20.0f, .6f, 1f);
-//            pLevel.addFreshEntity(entity);
-//            pLevel.playSound(null, pPlayer.getOnPos(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 1, 1);
-//            return InteractionResultHolder.consume(ItemStack.EMPTY);
-//        }
-//        return super.use(pLevel, pPlayer, pUsedHand);
-//    }
 
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
@@ -132,21 +145,6 @@ public class CatBottleItem extends Blocknt implements ICatContainer<ItemStack> {
         return item.asStack();
     }
 
-    public static CompoundTag writeRelevantCatData(Cat cat, CompoundTag tag) {
-        tag = cat.saveWithoutId(tag);
-        List.of(
-                "Motion",
-                "Rotation",
-                "Air",
-                "OnGround",
-                "Glowing",
-                "HasVisualFire",
-                "Passengers",
-                "CatType"
-        ).forEach(tag::remove);
-        return tag;
-    }
-
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return shouldCauseBlockBreakReset(oldStack, newStack);
@@ -183,10 +181,10 @@ public class CatBottleItem extends Blocknt implements ICatContainer<ItemStack> {
     }
 
     // Tooltip
-    public static final MutableComponent STAT_AGE_CHILD = ModLang.CAT_BOTTLE_STAT_AGE.copy().setStyle(CatBottles.Styles.BORING).append(": ").append(ModLang.CAT_BOTTLE_AGE_CHILD.copy().setStyle(CatBottles.Styles.STAT));
-    public static final MutableComponent STAT_AGE_ADULT = ModLang.CAT_BOTTLE_STAT_AGE.copy().setStyle(CatBottles.Styles.BORING).append(": ").append(ModLang.CAT_BOTTLE_AGE_ADULT.copy().setStyle(CatBottles.Styles.STAT));
-    public static final MutableComponent STAT_CAN_BREED_YES = ModLang.CAT_BOTTLE_STAT_CAN_BREED.copy().setStyle(CatBottles.Styles.BORING).append(": ").append(ModLang.YES.copy().setStyle(CatBottles.Styles.STAT));
-    public static final MutableComponent STAT_CAN_BREED_NO = ModLang.CAT_BOTTLE_STAT_CAN_BREED.copy().setStyle(CatBottles.Styles.BORING).append(": ").append(ModLang.NO.copy().setStyle(CatBottles.Styles.STAT));
+    public static final MutableComponent STAT_AGE_CHILD = ModLang.CAT_BOTTLE_STAT_AGE.copy().setStyle(Styles.BORING).append(": ").append(ModLang.CAT_BOTTLE_AGE_CHILD.copy().setStyle(Styles.STAT));
+    public static final MutableComponent STAT_AGE_ADULT = ModLang.CAT_BOTTLE_STAT_AGE.copy().setStyle(Styles.BORING).append(": ").append(ModLang.CAT_BOTTLE_AGE_ADULT.copy().setStyle(Styles.STAT));
+    public static final MutableComponent STAT_CAN_BREED_YES = ModLang.CAT_BOTTLE_STAT_CAN_BREED.copy().setStyle(Styles.BORING).append(": ").append(ModLang.YES.copy().setStyle(Styles.STAT));
+    public static final MutableComponent STAT_CAN_BREED_NO = ModLang.CAT_BOTTLE_STAT_CAN_BREED.copy().setStyle(Styles.BORING).append(": ").append(ModLang.NO.copy().setStyle(Styles.STAT));
 
     @Override
     public void appendHoverText(ItemStack pStack, @org.jetbrains.annotations.Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
@@ -198,7 +196,7 @@ public class CatBottleItem extends Blocknt implements ICatContainer<ItemStack> {
 
             // Cat cosmetic message
             TranslatableComponent message = ModLang.CAT_BOTTLE_MESSAGES.get(instance.getMessageIndex());
-            pTooltipComponents.add(message.copy().setStyle(CatBottles.Styles.INFO));
+            pTooltipComponents.add(message.copy().setStyle(Styles.INFO));
 
             // Stats
             var isBig = instance.getIsBig();
@@ -229,5 +227,4 @@ public class CatBottleItem extends Blocknt implements ICatContainer<ItemStack> {
     public CompoundTag getEntityData(ItemStack itemStack) {
         return itemStack.getOrCreateTagElement(ENTITY_ROOT);
     }
-
 }

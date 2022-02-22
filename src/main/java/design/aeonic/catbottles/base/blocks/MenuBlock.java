@@ -1,7 +1,7 @@
-package design.aeonic.catbottles.base.block;
+package design.aeonic.catbottles.base.blocks;
 
-import design.aeonic.catbottles.base.block.entity.MenuBlockEntity;
-import design.aeonic.catbottles.base.block.menu.SimpleMenu;
+import design.aeonic.catbottles.base.blocks.entity.MenuBlockEntity;
+import design.aeonic.catbottles.base.blocks.menu.SimpleMenu;
 import design.aeonic.catbottles.registry.Registrateish;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

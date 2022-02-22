@@ -2,6 +2,7 @@ package design.aeonic.catbottles.compat.jei;
 
 import design.aeonic.catbottles.CatBottles;
 import design.aeonic.catbottles.recipe.virtual.CatBathingRecipe;
+import design.aeonic.catbottles.registry.ModItems;
 import design.aeonic.catbottles.registry.ModLang;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -67,7 +68,7 @@ public class CatBathingCategory implements IRecipeCategory<CatBathingRecipe> {
         stacks.init(1, true, 72, 12);
         stacks.init(2, true, 35, 13);
 
-        stacks.set(0, CatBathingRecipe.INPUT_STACKS);
+        stacks.set(0, ModItems.ANY_CAT_BOTTLE.asStack());
         stacks.set(1, CatBathingRecipe.OUTPUT_ITEM.getDefaultInstance());
         stacks.set(2, new ItemStack(Items.CAULDRON).setHoverName(new TranslatableComponent("block.minecraft.water_cauldron")));
     }
